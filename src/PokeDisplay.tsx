@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 
 function PokeDisplay(props: any) {
   const { pokemonData, text, status, error } = props;
-  console.log(pokemonData);
 
   if (status === "loading") {
     return (
@@ -14,7 +13,11 @@ function PokeDisplay(props: any) {
   }
 
   if (status === "error") {
-    return <h1 className="pokemon-display">Error..{error.message}</h1>;
+    return (
+      <div className="pokemon-display">
+        <h1 className="pokemon-display">Error..{error.message}</h1>
+      </div>
+    );
   }
   return (
     <>
@@ -30,9 +33,9 @@ function PokeDisplay(props: any) {
         <div className="pokemon-display">
           <h1 className=" bit-text">{pokemonData?.name}</h1>
           <div className="pokemon-display__stat-screen">
-            {pokemonData?.stats?.map((el: any) => {
+            {pokemonData?.stats?.map((el: any, id: number) => {
               return (
-                <h1 className=" bit-text">
+                <h1 className=" bit-text" key={id}>
                   {el?.stat?.name + ": " + el?.base_stat}
                 </h1>
               );
