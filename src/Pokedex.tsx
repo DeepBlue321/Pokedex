@@ -5,9 +5,9 @@ import { fetchPokemon } from "./api/fetchPokemon";
 import PokeDisplay from "./PokeDisplay";
 
 function Pokedex() {
-  const [pokemonID, setPokemonID] = useState(29);
+  const [pokemonID, setPokemonID] = useState(1);
+  const [text, setText] = useState(false);
 
-  // Fetch data using useQuery hook
   const {
     data: pokemonData,
     status,
@@ -15,31 +15,41 @@ function Pokedex() {
   } = useQuery(["pokemon", pokemonID], () => fetchPokemon(pokemonID));
 
   const handleAreaClick = (event: any) => {
-    event.preventDefault(); // Prevent default link behavior
+    event.preventDefault();
     const title = event.target.getAttribute("title");
     if (title === "left") {
-      setPokemonID((prev) => prev - 1);
-      console.log(pokemonID);
+      setPokemonID((prev) => (prev - 1 > 0 ? prev - 1 : 225));
     }
     if (title === "right") {
       setPokemonID((prev) => prev + 1);
-      console.log(pokemonID);
+    }
+    if (title === "up") {
+      if (!text) {
+        setText(true);
+      }
+    }
+    if (title === "down") {
+      if (text) {
+        setText(false);
+      }
     }
   };
   return (
     <div className="App">
-      <div className="pokedex">
+      <motion.div
+        animate={{ y: [100, -10, 0], opacity: [0, 1] }}
+        transition={{ duration: 1 }}
+        className="pokedex"
+      >
         <img src="pokedex.png" useMap="#image-map"></img>
-        <motion.svg
-          transition={{ repeat: Infinity, duration: 5 }}
-          animate={{ opacity: [0, 1] }}
-          style={{ position: "absolute", left: "13%", top: "47%" }}
-        >
-          <circle cx="100" cy="100" r="20" fill="red" />
-          <circle cx="100" cy="100" r="30" fill="red" opacity={0.5} />
-        </motion.svg>
-        <PokeDisplay pokemonData={pokemonData} status={status} error={error} />
-      </div>
+
+        <PokeDisplay
+          text={text}
+          pokemonData={pokemonData}
+          status={status}
+          error={error}
+        />
+      </motion.div>
       <map name="image-map">
         <area
           onClick={handleAreaClick}
