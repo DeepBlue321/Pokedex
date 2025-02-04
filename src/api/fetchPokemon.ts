@@ -1,4 +1,4 @@
-export const fetchPokemon = async (pokemonID: number): Promise<any> => {
+export const fetchPokemon = async (pokemonID: number): Promise<unknown> => {
   const response = await fetch(
     "https://pokeapi.co/api/v2/pokemon/" + pokemonID
   );

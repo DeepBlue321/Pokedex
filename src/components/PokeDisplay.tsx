@@ -1,10 +1,17 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React from 'react';
+import { motion } from 'framer-motion';
 
-function PokeDisplay(props: any) {
+type PokeDisplayPops = {
+  pokemonData: unknown;
+  text: string;
+  status: string;
+  error: { message: string };
+};
+
+function PokeDisplay(props: PokeDisplayPops) {
   const { pokemonData, text, status, error } = props;
 
-  if (status === "loading") {
+  if (status === 'loading') {
     return (
       <div className="pokemon-display">
         <h1 className=" bit-text">Loading...</h1>
@@ -12,7 +19,7 @@ function PokeDisplay(props: any) {
     );
   }
 
-  if (status === "error") {
+  if (status === 'error') {
     return (
       <div className="pokemon-display">
         <h1 className="pokemon-display">Error..{error.message}</h1>
@@ -33,10 +40,10 @@ function PokeDisplay(props: any) {
         <div className="pokemon-display">
           <h1 className=" bit-text">{pokemonData?.name}</h1>
           <div className="pokemon-display__stat-screen">
-            {pokemonData?.stats?.map((el: any, id: number) => {
+            {pokemonData?.stats?.map((el: unknown, id: number) => {
               return (
                 <h1 className=" bit-text" key={id}>
-                  {el?.stat?.name + ": " + el?.base_stat}
+                  {el?.stat?.name + ': ' + el?.base_stat}
                 </h1>
               );
             })}

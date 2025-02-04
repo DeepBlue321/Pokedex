@@ -14,7 +14,7 @@ function Pokedex() {
     error,
   } = useQuery(['pokemon', pokemonID], () => fetchPokemon(pokemonID));
 
-  const handleAreaClick = (event: any) => {
+  const handleAreaClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
     const title = event.target.getAttribute('title');
     if (title === 'left') {
