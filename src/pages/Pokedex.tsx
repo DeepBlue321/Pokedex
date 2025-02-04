@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-import { useQuery } from "react-query";
-import { fetchPokemon } from "./api/fetchPokemon";
-import PokeDisplay from "./PokeDisplay";
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { useQuery } from 'react-query';
+import { fetchPokemon } from '../api/fetchPokemon';
+import PokeDisplay from '../components/PokeDisplay';
 
 function Pokedex() {
   const [pokemonID, setPokemonID] = useState(1);
@@ -12,23 +12,23 @@ function Pokedex() {
     data: pokemonData,
     status,
     error,
-  } = useQuery(["pokemon", pokemonID], () => fetchPokemon(pokemonID));
+  } = useQuery(['pokemon', pokemonID], () => fetchPokemon(pokemonID));
 
   const handleAreaClick = (event: any) => {
     event.preventDefault();
-    const title = event.target.getAttribute("title");
-    if (title === "left") {
+    const title = event.target.getAttribute('title');
+    if (title === 'left') {
       setPokemonID((prev) => (prev - 1 > 0 ? prev - 1 : 225));
     }
-    if (title === "right") {
+    if (title === 'right') {
       setPokemonID((prev) => prev + 1);
     }
-    if (title === "up") {
+    if (title === 'up') {
       if (!text) {
         setText(true);
       }
     }
-    if (title === "down") {
+    if (title === 'down') {
       if (text) {
         setText(false);
       }
